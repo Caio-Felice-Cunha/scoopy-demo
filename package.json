@@ -1,16 +1,26 @@
 {
   "name": "scoopy-demo",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "serve": "http-server site -p 4174 -c-1",
+    "dev": "vite --host 127.0.0.1 --port 4174",
+    "serve": "npm run dev",
+    "build": "vite build",
     "test": "node --test tests/catalog.test.mjs",
     "test:e2e": "playwright test",
-    "test:all": "npm test && npm run test:e2e"
+    "test:all": "npm test && npm run build && npm run test:e2e"
+  },
+  "dependencies": {
+    "@fontsource/allura": "5.3.0",
+    "@fontsource/nunito": "5.3.0",
+    "@fontsource/playfair-display": "5.3.0",
+    "gsap": "3.13.0",
+    "three": "0.180.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.10.2",
     "@playwright/test": "^1.55.0",
-    "http-server": "^14.1.1"
+    "vite": "^7.1.3"
   }
 }

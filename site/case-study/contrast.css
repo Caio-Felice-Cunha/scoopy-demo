@@ -1,0 +1,23 @@
+/* The product stylesheet defines global heading colors; the case owns its contrast. */
+.engineering-page .case-hero h1,
+.engineering-page .case-section h2,
+.engineering-page .case-section h3 {
+  color: var(--case-text);
+}
+
+.engineering-page .skip-link {
+  position: fixed;
+  top: .5rem;
+  left: .5rem;
+  z-index: 100;
+  padding: .65rem 1rem;
+  background: var(--case-panel);
+  color: var(--case-text);
+  border: 1px solid var(--case-line);
+  border-radius: .6rem;
+  transform: translateY(-160%);
+}
+
+.engineering-page .skip-link:focus {
+  transform: none;
+}
