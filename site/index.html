@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Scoopy is a privacy-safe interactive fashion discovery concept using a synthetic catalog.">
+  <meta name="theme-color" content="#fff8ec">
+  <title>Scoopy — A small wardrobe surprise</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#demo">Skip to demo</a>
+  <header><a class="logo" href="#top">scoopy<span>●</span></a><nav aria-label="Primary"><a href="#demo">Try it</a><a href="#story">Story</a><a href="https://github.com/Caio-Felice-Cunha/scoopy-demo">GitHub</a></nav></header>
+  <main id="top">
+    <section class="hero"><p class="eyebrow">A tiny fashion discovery experiment</p><h1>Less scrolling.<br><em>More surprise.</em></h1><p class="lede">Pick a mood, a palette, and how curious you feel. Scoopy edits a fictional mini-wardrobe for you — no account, tracking, checkout, or real inventory.</p><a class="pill-button" href="#demo">Build my scoop ↓</a><div class="orbit" aria-hidden="true"><span>🌸</span><span>🪐</span><span>🌿</span><span>✨</span></div></section>
+
+    <section id="demo" class="demo" aria-labelledby="demo-heading">
+      <div class="demo-intro"><p class="eyebrow">Interactive demo</p><h2 id="demo-heading">What should we scoop?</h2><p>Every item below is synthetic and belongs only to this demo.</p></div>
+      <form id="filters" class="filter-panel">
+        <label>Category<select name="category"><option value="all">Anything</option><option value="tops">Tops</option><option value="bottoms">Bottoms</option><option value="layers">Layers</option><option value="dresses">Dresses</option><option value="accessories">Accessories</option></select></label>
+        <label>Palette<select name="color"><option value="all">Surprise me</option><option value="cream">Cream</option><option value="blue">Blue</option><option value="pink">Pink</option><option value="green">Green</option><option value="black">Black</option><option value="yellow">Yellow</option></select></label>
+        <label>Style<select name="style"><option value="all">Open</option><option value="soft">Soft</option><option value="bold">Bold</option><option value="minimal">Minimal</option><option value="playful">Playful</option><option value="utility">Utility</option></select></label>
+        <label>Scoop size<select name="size"><option value="3">Tiny · 3</option><option value="5">Classic · 5</option><option value="7">Curious · 7</option></select></label>
+        <label>Theme<select name="theme"><option value="Sunday studio">Sunday studio</option><option value="Night market">Night market</option><option value="Coastal train">Coastal train</option></select></label>
+        <div class="filter-actions"><button id="scoop" class="scoop-button" type="button">Scoop it!</button><button id="reset" class="text-button" type="button">Reset</button></div>
+      </form>
+      <p id="match-count" class="match-count" aria-live="polite"></p>
+      <div id="catalog" class="catalog"></div>
+      <div id="scoop-result" class="result" tabindex="-1" aria-live="polite"><p class="result-placeholder">Your scoop will land here.</p></div>
+    </section>
+
+    <section id="story" class="story"><div><p class="eyebrow">Product decision</p><h2>A curated box, not an infinite shelf.</h2></div><div class="story-copy"><p>The original private prototype explored filters, themes, and the tactile “Scoop it!” reveal. The public version keeps that product question and removes retailer data, third-party images, purchases, analytics, and accounts.</p><p>Success here is intentionally small: a visitor understands the interaction and gets a useful-feeling result in under a minute.</p></div></section>
+    <section class="waitlist-card"><div><p class="eyebrow">Demo-only waitlist</p><h2>Test the final state safely.</h2><p>This form intentionally stores and sends nothing.</p></div><form id="waitlist"><label for="email">Email</label><div><input id="email" type="email" required placeholder="you@example.com"><button type="submit">Try demo state</button></div><p id="status" role="status" aria-live="polite"></p></form></section>
+  </main>
+  <footer><span>Scoopy concept · © 2026 Caio Di Felice Cunha</span><a href="https://github.com/Caio-Felice-Cunha/scoopy-demo">Code and limitations</a></footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
