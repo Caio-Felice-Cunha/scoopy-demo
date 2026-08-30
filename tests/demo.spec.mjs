@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
 
 function collectExternalRequests(page) {
   const external = [];
@@ -78,3 +79,20 @@ test.describe('mobile and reduced motion', () => {
     expect(consoleErrors).toEqual([]);
   });
 });
+
+for (const route of ['/?static=1', '/case-study/']) {
+  test(`WCAG AA audit passes for ${route}`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto(route);
+    await page.evaluate(() => {
+      document.querySelectorAll('.reveal').forEach((element) => element.classList.add('in'));
+    });
+    const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
+    const summary = violations.map(({ id, impact, nodes }) => ({
+      id,
+      impact,
+      targets: nodes.map((node) => node.target.join(' ')),
+    }));
+    expect(summary).toEqual([]);
+  });
+}
