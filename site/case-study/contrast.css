@@ -1,0 +1,5 @@
+/* The product stylesheet defines global heading colors; the case owns its contrast. */
+.engineering-page .case-hero h1,
+.engineering-page .case-section h2 {
+  color: var(--case-text);
+}

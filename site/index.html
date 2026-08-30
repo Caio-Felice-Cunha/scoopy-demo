@@ -1,38 +1,420 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Scoopy is a privacy-safe interactive fashion discovery concept using a synthetic catalog.">
-  <meta name="theme-color" content="#fff8ec">
-  <title>Scoopy — A small wardrobe surprise</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scoopy — A little joy, scooped for you · Interactive product demo</title>
+  <meta name="description" content="Scoopy is a safe interactive product concept with a synthetic stationery catalog, a deterministic scoop builder, and a locally bundled 3D story." />
+
+  <!-- Favicon: the bag logo (brand board, logo 1) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='34' r='20' fill='%23F7BDC7'/%3E%3Ccircle cx='44' cy='31' r='2.6' fill='%233E2F23'/%3E%3Ccircle cx='56' cy='31' r='2.6' fill='%233E2F23'/%3E%3Cellipse cx='38' cy='37' rx='4' ry='3' fill='%23E7A7B6'/%3E%3Cellipse cx='62' cy='37' rx='4' ry='3' fill='%23E7A7B6'/%3E%3Cpath d='M28 44 L72 44 L76 88 L24 88 Z' fill='%23F6EFEA' stroke='%233E2F23' stroke-width='3' stroke-linejoin='round'/%3E%3Cpath d='M38 44 a12 12 0 0 1 24 0' fill='none' stroke='%233E2F23' stroke-width='3'/%3E%3Ctext x='50' y='75' font-family='Georgia,serif' font-size='28' fill='%233E2F23' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E" />
+
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <a class="skip-link" href="#demo">Skip to demo</a>
-  <header><a class="logo" href="#top">scoopy<span>●</span></a><nav aria-label="Primary"><a href="#demo">Try it</a><a href="#story">Story</a><a href="https://github.com/Caio-Felice-Cunha/scoopy-demo">GitHub</a></nav></header>
-  <main id="top">
-    <section class="hero"><p class="eyebrow">A tiny fashion discovery experiment</p><h1>Less scrolling.<br><em>More surprise.</em></h1><p class="lede">Pick a mood, a palette, and how curious you feel. Scoopy edits a fictional mini-wardrobe for you — no account, tracking, checkout, or real inventory.</p><a class="pill-button" href="#demo">Build my scoop ↓</a><div class="orbit" aria-hidden="true"><span>🌸</span><span>🪐</span><span>🌿</span><span>✨</span></div></section>
+  <!-- ============ Scoopy brand marks ============ -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <!-- Logo 4 · Espia: the character peeking over a line (header, hero, waitlist card) -->
+    <symbol id="peek-face" viewBox="0 0 200 120">
+      <clipPath id="peekClip"><rect x="0" y="0" width="200" height="99"/></clipPath>
+      <g clip-path="url(#peekClip)">
+        <circle cx="100" cy="98" r="52" fill="#F7BDC7"/>
+        <ellipse cx="72" cy="86" rx="8.5" ry="6" fill="#E7A7B6"/>
+        <ellipse cx="128" cy="86" rx="8.5" ry="6" fill="#E7A7B6"/>
+        <circle cx="84" cy="74" r="5.5" fill="#3E2F23"/>
+        <circle cx="116" cy="74" r="5.5" fill="#3E2F23"/>
+        <path d="M94 83 q6 5 12 0" fill="none" stroke="#3E2F23" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <line x1="12" y1="100" x2="188" y2="100" stroke="#3E2F23" stroke-width="5.5" stroke-linecap="round"/>
+      <circle cx="56" cy="97" r="9" fill="#F7BDC7"/>
+      <circle cx="144" cy="97" r="9" fill="#F7BDC7"/>
+    </symbol>
 
-    <section id="demo" class="demo" aria-labelledby="demo-heading">
-      <div class="demo-intro"><p class="eyebrow">Interactive demo</p><h2 id="demo-heading">What should we scoop?</h2><p>Every item below is synthetic and belongs only to this demo.</p></div>
-      <form id="filters" class="filter-panel">
-        <label>Category<select name="category"><option value="all">Anything</option><option value="tops">Tops</option><option value="bottoms">Bottoms</option><option value="layers">Layers</option><option value="dresses">Dresses</option><option value="accessories">Accessories</option></select></label>
-        <label>Palette<select name="color"><option value="all">Surprise me</option><option value="cream">Cream</option><option value="blue">Blue</option><option value="pink">Pink</option><option value="green">Green</option><option value="black">Black</option><option value="yellow">Yellow</option></select></label>
-        <label>Style<select name="style"><option value="all">Open</option><option value="soft">Soft</option><option value="bold">Bold</option><option value="minimal">Minimal</option><option value="playful">Playful</option><option value="utility">Utility</option></select></label>
-        <label>Scoop size<select name="size"><option value="3">Tiny · 3</option><option value="5">Classic · 5</option><option value="7">Curious · 7</option></select></label>
-        <label>Theme<select name="theme"><option value="Sunday studio">Sunday studio</option><option value="Night market">Night market</option><option value="Coastal train">Coastal train</option></select></label>
-        <div class="filter-actions"><button id="scoop" class="scoop-button" type="button">Scoop it!</button><button id="reset" class="text-button" type="button">Reset</button></div>
-      </form>
-      <p id="match-count" class="match-count" aria-live="polite"></p>
-      <div id="catalog" class="catalog"></div>
-      <div id="scoop-result" class="result" tabindex="-1" aria-live="polite"><p class="result-placeholder">Your scoop will land here.</p></div>
+    <!-- Logo 1 · Sacola: the character behind the C bag (footer, seals) -->
+    <symbol id="logo-bag" viewBox="0 0 200 200">
+      <circle cx="100" cy="62" r="36" fill="#F7BDC7"/>
+      <circle cx="88" cy="54" r="4.6" fill="#3E2F23"/>
+      <circle cx="112" cy="54" r="4.6" fill="#3E2F23"/>
+      <ellipse cx="76" cy="63" rx="6.5" ry="4.8" fill="#E7A7B6"/>
+      <ellipse cx="124" cy="63" rx="6.5" ry="4.8" fill="#E7A7B6"/>
+      <path d="M95 61 q5 4 10 0" fill="none" stroke="#3E2F23" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M150 30 c8 -8 20 2 12 12 l-12 10 -12 -10 c-8 -10 4 -20 12 -12 Z" fill="#F7BDC7" transform="rotate(12 150 38)"/>
+      <path d="M53 82 L147 82 L154 172 L46 172 Z" fill="#F6EFEA" stroke="#3E2F23" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M76 82 a 24 22 0 0 1 48 0" fill="none" stroke="#3E2F23" stroke-width="4.5"/>
+      <text x="100" y="142" font-family="'Playfair Display',Georgia,serif" font-size="52" font-weight="600" fill="#3E2F23" text-anchor="middle">C</text>
+    </symbol>
+
+    <!-- Logo 6 · C inicial, as a wax seal (story section) -->
+    <symbol id="seal-cmark" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="92" fill="#E7A7B6"/>
+      <circle cx="100" cy="100" r="76" fill="none" stroke="#D897A6" stroke-width="3.5"/>
+      <path d="M136 74 A 46 46 0 1 0 138 128" fill="none" stroke="#B4707E" stroke-width="19" stroke-linecap="round"/>
+      <circle cx="132" cy="62" r="19" fill="#F0C3CC"/>
+      <circle cx="126" cy="58" r="2.8" fill="#8E5560"/>
+      <circle cx="139" cy="58" r="2.8" fill="#8E5560"/>
+      <ellipse cx="121" cy="64" rx="3.6" ry="2.6" fill="#DFA5B1"/>
+      <ellipse cx="143" cy="64" rx="3.6" ry="2.6" fill="#DFA5B1"/>
+      <path d="M129 66 q4 3 8 0" fill="none" stroke="#8E5560" stroke-width="2" stroke-linecap="round"/>
+      <path d="M63 62 l3.5 9 9 3.5 -9 3.5 -3.5 9 -3.5 -9 -9 -3.5 9 -3.5 Z" fill="#C98A98"/>
+      <path d="M148 148 c5 -5 12 1 7 7 l-7 6 -7 -6 c-5 -6 2 -12 7 -7 Z" fill="#C98A98"/>
+    </symbol>
+
+    <!-- support elements: four-point sparkle + heart (fill inherited from <use>) -->
+    <symbol id="spark" viewBox="0 0 100 100">
+      <path d="M50 2 L60 40 L98 50 L60 60 L50 98 L40 60 L2 50 L40 40 Z"/>
+    </symbol>
+    <symbol id="heart" viewBox="0 0 100 100">
+      <path d="M50 86 C14 60 10 30 30 21 C42 16 50 26 50 32 C50 26 58 16 70 21 C90 30 86 60 50 86 Z"/>
+    </symbol>
+  </svg>
+
+  <!-- grain + soft blobs atmosphere -->
+  <div class="atmosphere" aria-hidden="true">
+    <span class="blob blob--1"></span>
+    <span class="blob blob--2"></span>
+    <span class="blob blob--3"></span>
+    <div class="grain"></div>
+  </div>
+
+  <!-- floating kawaii doodles (mouse parallax) -->
+  <div class="floaties" aria-hidden="true">
+    <span class="floaty" data-depth="0.10" style="top:14%;left:6%">🍓</span>
+    <span class="floaty" data-depth="0.18" style="top:22%;left:88%">✨</span>
+    <span class="floaty" data-depth="0.06" style="top:63%;left:4%">🐹</span>
+    <span class="floaty" data-depth="0.14" style="top:78%;left:92%">🎀</span>
+    <span class="floaty" data-depth="0.09" style="top:42%;left:95%">🧁</span>
+    <span class="floaty" data-depth="0.12" style="top:88%;left:12%">⭐</span>
+  </div>
+
+  <!-- ============ header ============ -->
+  <header class="nav" id="top">
+    <a class="brand" href="#top" aria-label="Scoopy home">
+      <svg class="brand__mark brand__mark--peek" viewBox="0 0 200 120"><use href="#peek-face"/></svg>
+      <span class="brand__name brandname">Scoopy</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#scoops">Scoops</a>
+      <a href="#collections">Collections</a>
+      <a href="#how">How it works</a>
+      <a href="#story">Our story</a>
+      <a href="case-study/">Engineering case</a>
+    </nav>
+    <a href="#build" class="btn btn--cta nav__join">Try the demo</a>
+    <button class="nav__toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </header>
+
+  <main>
+    <div class="pre3d">
+    <!-- ============ hero ============ -->
+    <section class="hero" id="hero">
+      <div class="hero__copy">
+        <p class="eyebrow reveal">🍦 Interactive product concept · <strong>Vancouver</strong></p>
+        <h1 class="hero__title">
+          <span class="reveal" style="--d:0">A little joy,</span>
+          <span class="reveal script" style="--d:1">scooped</span>
+          <span class="reveal" style="--d:2">for you.</span>
+        </h1>
+        <p class="hero__sub reveal" style="--d:3">
+          <span class="brandname">Scoopy</span> explores a smaller, more delightful way to browse:
+          choose a vibe and a demo tier, then reveal a deterministic scoop from 221 synthetic items. 🎀
+        </p>
+        <div class="hero__cta reveal" style="--d:4">
+          <a href="#build" class="btn btn--cta btn--lg">Build a demo scoop</a>
+          <a href="case-study/" class="btn btn--ghost btn--lg">Engineering case ↗</a>
+        </div>
+        <p class="hero__note reveal" style="--d:5">✦ Synthetic catalog · no checkout · no account · nothing collected</p>
+        <p class="signature reveal" style="--d:6">made to inspire</p>
+      </div>
+
+      <div class="hero__art" aria-hidden="true">
+        <div class="scoop-stage">
+          <span class="ring ring--a"></span>
+          <span class="ring ring--b"></span>
+          <div class="peek-lockup">
+            <svg class="scoop-hero" viewBox="0 0 200 120"><use href="#peek-face"/></svg>
+            <span class="peek-lockup__name">Scoopy</span>
+            <svg class="peek-lockup__spark" viewBox="0 0 100 100" fill="#DBC6B6"><use href="#spark"/></svg>
+          </div>
+          <svg class="sprinkle-svg sp-a" viewBox="0 0 100 100" fill="#7FC0B5"><use href="#spark"/></svg>
+          <svg class="sprinkle-svg sp-b" viewBox="0 0 100 100" fill="#F7BDC7"><use href="#heart"/></svg>
+          <span class="sprinkle s1">✏️</span>
+          <span class="sprinkle s2">🩷</span>
+          <span class="sprinkle s3">🌸</span>
+          <span class="sprinkle s4">⭐</span>
+          <span class="sprinkle s5">🧸</span>
+        </div>
+      </div>
     </section>
 
-    <section id="story" class="story"><div><p class="eyebrow">Product decision</p><h2>A curated box, not an infinite shelf.</h2></div><div class="story-copy"><p>The original private prototype explored filters, themes, and the tactile “Scoop it!” reveal. The public version keeps that product question and removes retailer data, third-party images, purchases, analytics, and accounts.</p><p>Success here is intentionally small: a visitor understands the interaction and gets a useful-feeling result in under a minute.</p></div></section>
-    <section class="waitlist-card"><div><p class="eyebrow">Demo-only waitlist</p><h2>Test the final state safely.</h2><p>This form intentionally stores and sends nothing.</p></div><form id="waitlist"><label for="email">Email</label><div><input id="email" type="email" required placeholder="you@example.com"><button type="submit">Try demo state</button></div><p id="status" role="status" aria-live="polite"></p></form></section>
+    </div><!-- /.pre3d -->
+
+    <!-- ============ The Scoop Story: scroll-driven 3D (progressive enhancement) ============ -->
+    <div class="gl-wrap" aria-hidden="true"><canvas id="gl"></canvas></div>
+    <div class="boot-line" aria-hidden="true">🍦 scooping up something cute…</div>
+
+    <section class="story-track" id="scoop-story" aria-label="The scoop story, from a little box to your door">
+      <div class="story-layer">
+
+        <section class="story-phase p-left" id="sp-0">
+          <p class="sp-kicker"><span class="sp-no">00</span> <span class="sp-nm">the little world</span> 📦</p>
+          <h3>It starts with a little kraft box.</h3>
+          <p>Every scoop begins the same way: a plain kraft box, and somebody very pink keeping watch.</p>
+        </section>
+
+        <section class="story-phase p-right" id="sp-1">
+          <p class="sp-kicker"><span class="sp-no">01</span> <span class="sp-nm">pick a vibe</span> 🎨</p>
+          <h3>Cozy critters? Ribbon club? Tiny-treat joy?</h3>
+          <p>You pick the vibe. We take it from there.</p>
+          <p class="sp-chips"><span class="tag">🎀 Ribbon Club</span> <span class="tag">🐹 Cozy Critters</span> <span class="tag">🍓 Tiny Treats</span></p>
+        </section>
+
+        <section class="story-phase p-left" id="sp-2">
+          <p class="sp-kicker"><span class="sp-no">02</span> <span class="sp-nm">we scoop it</span> 🥄</p>
+          <h3>Hand-picked, one treasure at a time.</h3>
+          <p>Notebook, pen, washi, the good erasers. Tested, tidy, tucked in tissue.</p>
+        </section>
+
+        <section class="story-phase p-right" id="sp-3">
+          <p class="sp-kicker"><span class="sp-no">03</span> <span class="sp-nm">wrapped like a gift</span> 🎀</p>
+          <h3>Ribbon, bow… and a pink wax seal.</h3>
+          <p>Stamped by hand, sealed with a C. Because it is a gift.</p>
+        </section>
+
+        <section class="story-phase p-left" id="sp-4">
+          <p class="sp-kicker"><span class="sp-no">04</span> <span class="sp-nm">to your door</span> 🏠</p>
+          <h3>Across town, with a happy little hop.</h3>
+          <p>Local pickup or shipped across Metro Vancouver, packed so nothing shifts.</p>
+        </section>
+
+        <section class="story-phase p-right" id="sp-5">
+          <p class="sp-kicker"><span class="sp-no">05</span> <span class="sp-nm">unbox the joy</span> ✨</p>
+          <h3>The best part is yours.</h3>
+          <p>Be first in line when the boutique opens.</p>
+          <p class="sp-cta"><a class="btn btn--cta" href="#join">Join the waitlist 🍓</a></p>
+        </section>
+
+      </div>
+
+      <nav class="rail" aria-label="Story chapters">
+        <button type="button" data-p="0.06" class="on" aria-label="Jump to chapter 0, the little world"><svg viewBox="0 0 100 100"><use href="#heart"/></svg></button>
+        <button type="button" data-p="0.21" aria-label="Jump to chapter 1, pick a vibe"><svg viewBox="0 0 100 100"><use href="#heart"/></svg></button>
+        <button type="button" data-p="0.38" aria-label="Jump to chapter 2, we scoop it"><svg viewBox="0 0 100 100"><use href="#heart"/></svg></button>
+        <button type="button" data-p="0.55" aria-label="Jump to chapter 3, wrapped like a gift"><svg viewBox="0 0 100 100"><use href="#heart"/></svg></button>
+        <button type="button" data-p="0.73" aria-label="Jump to chapter 4, to your door"><svg viewBox="0 0 100 100"><use href="#heart"/></svg></button>
+        <button type="button" data-p="0.93" aria-label="Jump to chapter 5, unbox the joy"><svg viewBox="0 0 100 100"><use href="#heart"/></svg></button>
+      </nav>
+
+      <div class="readout" aria-hidden="true">
+        <div>scoop <b id="ro-pct">000%</b></div>
+        <div id="ro-phase">00 · the little world</div>
+      </div>
+    </section>
+
+    <div class="post3d">
+    <!-- ============ marquee ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>curated cute</span><span aria-hidden="true">✦</span>
+        <span>designed in Vancouver</span><span>✦</span>
+        <span>a scoop of joy</span><span>✦</span>
+        <span>surprise, unboxed</span><span>✦</span>
+        <span>hand-picked kawaii</span><span>✦</span>
+        <span>curated cute</span><span>✦</span>
+        <span>designed in Vancouver</span><span>✦</span>
+        <span>a scoop of joy</span><span>✦</span>
+        <span>surprise, unboxed</span><span>✦</span>
+        <span>hand-picked kawaii</span><span>✦</span>
+      </div>
+    </div>
+
+    <!-- ============ how it works ============ -->
+    <section class="section how" id="how">
+      <header class="section__head">
+        <p class="kicker reveal">The ritual</p>
+        <h2 class="reveal">Three little steps to a lot of cute</h2>
+      </header>
+      <ol class="steps">
+        <li class="step reveal">
+          <span class="step__num">1</span>
+          <span class="step__emoji">🎨</span>
+          <h3>Pick a vibe</h3>
+          <p>Cozy critters? Ribbon club? Tiny treats? Choose one of twelve synthetic themes.</p>
+        </li>
+        <li class="step reveal" style="--d:1">
+          <span class="step__num">2</span>
+          <span class="step__emoji">🥄</span>
+          <h3>We scoop it</h3>
+          <p>A stable seed turns the selected theme and tier into the same inspectable result every time.</p>
+        </li>
+        <li class="step reveal" style="--d:2">
+          <span class="step__num">3</span>
+          <span class="step__emoji">📦</span>
+          <h3>Unbox the joy</h3>
+          <p>The concept completes as a gift-like reveal; no order, payment, or delivery is created.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ scoops (offer tiers) ============ -->
+    <section class="section scoops" id="scoops">
+      <header class="section__head">
+        <p class="kicker reveal">Choose your scoop</p>
+        <h2 class="reveal">How big is your craving for cute?</h2>
+        <p class="section__lede reveal">Every tier is a product-state simulation. Prices are fictional demo values in CAD.</p>
+      </header>
+      <div class="scoop-grid" id="scoopGrid"><!-- injected by app.js --></div>
+      <p class="scoops__foot reveal">✦ Mystery, but inspectable: the catalog is synthetic and the selection algorithm is public.</p>
+    </section>
+
+    <!-- ============ collections ============ -->
+    <section class="section collections" id="collections">
+      <header class="section__head">
+        <p class="kicker reveal">The collections</p>
+        <h2 class="reveal"><span id="themeCount">12</span> curated themes · <span id="prodCount">221</span> cute things</h2>
+        <p class="section__lede reveal">Three themes are featured, but all twelve and all 221 generated items belong to this offline demo.</p>
+      </header>
+      <div class="filter" id="filter" role="tablist" aria-label="Filter collections">
+        <button class="chip is-active" data-filter="all">All</button>
+        <button class="chip" data-filter="launch">✦ Featured themes</button>
+      </div>
+      <div class="collection-grid" id="collectionGrid"><!-- injected by app.js --></div>
+    </section>
+
+    <!-- ============ build your scoop ============ -->
+    <section class="section build" id="build">
+      <div class="build__inner">
+        <header class="section__head section__head--left">
+          <p class="kicker reveal">Try it</p>
+          <h2 class="reveal">Build your scoop</h2>
+          <p class="section__lede reveal">A little taste of the magic. Pick a theme and a size, then scoop — we'll surprise you with a peek.</p>
+        </header>
+
+        <div class="builder reveal">
+          <div class="builder__controls">
+            <label class="field">
+              <span>Theme</span>
+              <select id="buildTheme"></select>
+            </label>
+            <label class="field">
+              <span>Size</span>
+              <select id="buildSize"></select>
+            </label>
+            <button class="btn btn--cta" id="scoopBtn">Scoop it! 🥄</button>
+          </div>
+          <div class="builder__stage" id="buildStage" aria-live="polite">
+            <p class="builder__hint">Your surprise peek shows up here ✨</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ story ============ -->
+    <section class="section story" id="story">
+      <div class="story__grid">
+        <div class="story__art" aria-hidden="true">
+          <svg class="scoop-soft" viewBox="0 0 200 200"><use href="#seal-cmark"/></svg>
+        </div>
+        <div class="story__copy">
+          <p class="kicker reveal">Our story</p>
+          <h2 class="reveal">Cute, but make it thoughtful.</h2>
+          <p class="reveal">There's a lot of cute stationery out there — piled on giant shelves, hit or miss, a bit overwhelming. <span class="brandname">Scoopy</span> started with a simple idea: <strong>what if someone with really good taste just picked the best bits for you?</strong></p>
+          <p class="reveal">The public demo tests that question with generated inventory, deterministic selection, and a tactile reveal — without copying a retailer catalog or pretending to accept an order.</p>
+          <p class="reveal">Designed as a product and interaction study in Vancouver. 🤍</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ vancouver / local ============ -->
+    <section class="section local" id="vancouver">
+      <header class="section__head">
+        <p class="kicker reveal">Product scenarios</p>
+        <h2 class="reveal">A Vancouver concept, not an operating storefront</h2>
+      </header>
+      <div class="local-grid">
+        <div class="local-card reveal"><span>📍</span><h3>Local pickup concept</h3><p>A hypothetical zero-shipping path used to shape the product journey.</p></div>
+        <div class="local-card reveal" style="--d:1"><span>📮</span><h3>Delivery concept</h3><p>A packaging state demonstrates how the reveal could extend beyond the screen.</p></div>
+        <div class="local-card reveal" style="--d:2"><span>🎪</span><h3>Pop-up concept</h3><p>A future-facing scenario for a build-your-own interaction, not an announced event.</p></div>
+      </div>
+    </section>
+
+    <!-- ============ join / waitlist ============ -->
+    <section class="section join" id="join">
+      <div class="join__card reveal">
+        <svg class="join__peek" viewBox="0 0 200 120" aria-hidden="true"><use href="#peek-face"/></svg>
+        <div class="join__copy">
+          <h2>Try the final form state.</h2>
+          <p>This is a portfolio interaction only. Submitting demonstrates success feedback and intentionally sends or stores nothing.</p>
+          <ul class="join__perks">
+            <li>🎁 Complete the product journey safely</li>
+            <li>🩷 Inspect validation and success feedback</li>
+            <li>✉️ Confirm zero network and zero persistence</li>
+          </ul>
+        </div>
+        <form class="join__form" id="waitlistForm" novalidate>
+          <!-- Demo invariant: this form never submits or persists visitor data. -->
+          <label class="field">
+            <span>Your email <b>*</b></span>
+            <input type="email" id="wlEmail" name="email" placeholder="you@example.com" required />
+          </label>
+          <label class="field">
+            <span>First name</span>
+            <input type="text" id="wlName" name="name" placeholder="What should we call you?" />
+          </label>
+          <label class="field">
+            <span>Favourite theme</span>
+            <select id="wlTheme" name="theme"></select>
+          </label>
+          <button type="submit" class="btn btn--cta btn--lg btn--block">Try demo state 🍓</button>
+          <p class="join__fineprint">Your entries remain in this form only until the success state replaces it.</p>
+        </form>
+      </div>
+    </section>
+    </div><!-- /.post3d -->
   </main>
-  <footer><span>Scoopy concept · © 2026 Caio Di Felice Cunha</span><a href="https://github.com/Caio-Felice-Cunha/scoopy-demo">Code and limitations</a></footer>
-  <script type="module" src="app.js"></script>
+
+  <!-- ============ footer ============ -->
+  <footer class="foot">
+    <div class="foot__brand">
+      <svg class="brand__mark brand__mark--bag" viewBox="0 0 200 200"><use href="#logo-bag"/></svg>
+      <span class="brand__name brandname">Scoopy</span>
+    </div>
+    <p class="foot__tag brandtag">A little joy, scooped for you.</p>
+    <p class="foot__script">made to inspire</p>
+    <nav class="foot__links" aria-label="Footer">
+      <a href="#scoops">Scoops</a>
+      <a href="#collections">Collections</a>
+      <a href="#how">How it works</a>
+      <a href="case-study/">Engineering case</a>
+    </nav>
+    <p class="foot__meta">Built with 🤍 in Vancouver · <span id="year"></span> · Interactive demo</p>
+  </footer>
+
+  <!-- The Scoop Story boot gate. Every failure path degrades to the static page. -->
+  <script>
+  (function () {
+    'use strict';
+    /* 'none' = 3D impossible (no WebGL / ?static=1): the module never engages.
+       'auto' = the module boots and decides full/static itself (and re-decides on resize). */
+    var mode = 'none';
+    try {
+      if (!/[?&]static=1/.test(location.search) && 'requestAnimationFrame' in window && window.matchMedia) {
+        var canvas = document.createElement('canvas');
+        if (canvas.getContext('webgl2') || canvas.getContext('webgl')) mode = 'auto';
+      }
+    } catch (e) { mode = 'none'; }
+    window.__scoopMode = mode;
+    window.__scoopBooted = false;
+    if (mode === 'auto' && window.innerWidth >= 900 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('boot-pending');
+      setTimeout(function () {
+        if (!window.__scoopBooted) {
+          document.documentElement.classList.remove('boot-pending');
+          window.__scoopMode = 'none';
+        }
+      }, 8000);
+    }
+  })();
+  </script>
+  <script type="module" src="main.js"></script>
 </body>
 </html>

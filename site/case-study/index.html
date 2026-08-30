@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Engineering case study for Scoopy's synthetic catalog, deterministic scoop builder, and progressive 3D story.">
+  <title>Scoopy — Engineering case</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="contrast.css">
+</head>
+<body class="engineering-page">
+  <a class="skip-link" href="#case">Skip to engineering case</a>
+  <header class="case-nav"><a class="case-brand" href="../">scoopy<span>●</span></a><nav aria-label="Case navigation"><a href="#architecture">Architecture</a><a href="#code">Code</a><a href="#quality">Quality</a></nav><a class="case-button" href="../">Try product demo</a></header>
+  <main id="case">
+    <section class="case-hero"><p class="case-kicker">Interactive demo · 221 synthetic items · zero external writes</p><h1>A product experience first.<br><em>An inspectable system underneath.</em></h1><p>Scoopy reframes catalog browsing as a small reveal. The public implementation keeps the complete visual journey while replacing retailer content and commercial behavior with deterministic, reviewable code.</p><div class="case-actions"><a class="case-button primary" href="../#build">Try the builder</a><a class="case-button" href="https://github.com/Caio-Felice-Cunha/scoopy-demo">View source</a><a class="case-button" href="#run">Run locally</a></div></section>
+    <section class="case-section quick-tour" aria-labelledby="tour-title"><div><p class="case-kicker">60-second tour</p><h2 id="tour-title">What to inspect</h2></div><ol><li><strong>Scroll the story.</strong><span>The box moves through six chapters with a static fallback.</span></li><li><strong>Open collections.</strong><span>Twelve themes expose a generated 221-item catalog.</span></li><li><strong>Build twice.</strong><span>The same theme and tier return the same scoop.</span></li><li><strong>Submit the form.</strong><span>The final state confirms nothing was stored or sent.</span></li></ol></section>
+    <section id="architecture" class="case-section"><p class="case-kicker">Architecture</p><h2>Progressive enhancement keeps the story optional.</h2><div class="flow" role="img" aria-label="Synthetic catalog flows to product components and deterministic builder. Capability detection optionally enables a Three.js and GSAP story. Both paths remain static GitHub Pages output."><span>Synthetic catalog</span><b>→</b><span>Product UI</span><b>→</b><span>Deterministic scoop</span><b>→</b><span>Browser-only result</span><span>Capability gate</span><b>→</b><span>Three.js scene</span><b>→</b><span>GSAP scroll chapters</span><b>→</b><span>Static fallback</span></div><div class="decision-grid"><article><h3>Why static?</h3><p>The demo needs no account, backend, database, analytics, or paid service. GitHub Pages is the full runtime.</p></article><article><h3>Why deterministic?</h3><p>A stable hash makes the interaction testable and lets a recruiter reproduce the same state.</p></article><article><h3>Why a fallback?</h3><p>Content remains readable when WebGL, motion, or JavaScript capabilities are limited.</p></article></div></section>
+    <section class="case-section"><p class="case-kicker">Workflow</p><h2>From approved visual prototype to public evidence.</h2><ol class="workflow"><li><span>01</span><div><strong>Preserve</strong><p>Carry over the product composition, brand tokens, and six-chapter interaction.</p></div></li><li><span>02</span><div><strong>Sanitize</strong><p>Replace catalog titles, brands, URLs, images, sales claims, and form behavior.</p></div></li><li><span>03</span><div><strong>Isolate</strong><p>Bundle pinned fonts and animation libraries locally and block third-party runtime traffic.</p></div></li><li><span>04</span><div><strong>Prove</strong><p>Test deterministic data, fallbacks, keyboard navigation, mobile layout, and zero writes.</p></div></li></ol></section>
+    <section id="code" class="case-section"><p class="case-kicker">Annotated public code</p><h2>Small functions carry the important guarantees.</h2><div class="code-grid"><article><header><span>Deterministic selection</span><a href="https://github.com/Caio-Felice-Cunha/scoopy-demo/blob/main/site/catalog.mjs">catalog.mjs ↗</a></header><pre><code>export function deterministicScoop(items, size, seed) {
+  const count = Math.max(0, Math.min(Number(size) || 0, items.length));
+  return seededOrder(items, seed).slice(0, count);
+}</code></pre><p>The seed is derived from theme and tier, so tests and visitors can reproduce a scoop.</p></article><article><header><span>Capability gate</span><a href="https://github.com/Caio-Felice-Cunha/scoopy-demo/blob/main/site/index.html">index.html ↗</a></header><pre><code>var mode = 'none';
+var canvas = document.createElement('canvas');
+if (canvas.getContext('webgl2') || canvas.getContext('webgl')) {
+  mode = 'auto';
+}
+window.__scoopMode = mode;</code></pre><p>The content path is the default; the 3D layer earns permission from browser capabilities.</p></article><article><header><span>Zero-write success</span><a href="https://github.com/Caio-Felice-Cunha/scoopy-demo/blob/main/site/app.js">app.js ↗</a></header><pre><code>heading.textContent = 'Demo state complete, ' + name + '.';
+message.textContent = 'Nothing was stored or sent. This browser-only form exists to demonstrate the final product state.';
+success.append(icon, heading, message);
+form.appendChild(success);</code></pre><p>Text-only DOM APIs prevent injection. No fetch, storage API, form action, or analytics endpoint exists in the demo path.</p></article></div></section>
+    <section id="quality" class="case-section"><p class="case-kicker">Quality evidence</p><h2>Safety is part of the product behavior.</h2><div class="quality-grid"><article><strong>221 / 12</strong><span>exact item and theme contract</span></article><article><strong>0</strong><span>third-party runtime requests</span></article><article><strong>0</strong><span>stored or transmitted form entries</span></article><article><strong>3 paths</strong><span>full 3D, reduced motion, static fallback</span></article></div><ul class="evidence"><li>Node tests validate count, uniqueness, synthetic fields, and repeatable selection.</li><li>Playwright covers desktop, mobile, keyboard, builder, form, case links, reduced motion, and static mode.</li><li>Text and focus remain available before the optional 3D module finishes.</li></ul></section>
+    <section id="run" class="case-section run-card"><div><p class="case-kicker">Run locally</p><h2>One static build, no service account.</h2></div><pre><code>npm install
+npm run dev
+npm run test:all</code></pre><p><strong>Limitations:</strong> this is a product concept, not a storefront. Prices, inventory, pickup, delivery, and waitlist behavior are demonstrative.</p></section>
+  </main>
+  <footer class="case-footer"><span>Scoopy engineering case · © 2026 Caio Di Felice Cunha</span><a href="../">Product demo</a></footer>
+  <script type="module" src="../main.js"></script>
+</body>
+</html>
