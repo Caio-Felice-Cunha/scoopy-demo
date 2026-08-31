@@ -59,6 +59,11 @@ test('desktop capability path boots the locally bundled 3D story', async ({ page
   await page.goto('/');
   await expect.poll(() => page.evaluate(() => window.__scoopBooted)).toBe(true);
   await expect(page.locator('body')).toHaveClass(/story-on/);
+  const layout = await page.evaluate(() => ({
+    viewport: window.innerWidth,
+    document: document.documentElement.scrollWidth,
+  }));
+  expect(layout.document).toBeLessThanOrEqual(layout.viewport);
   expect(external).toEqual([]);
   expect(consoleErrors).toEqual([]);
 });
